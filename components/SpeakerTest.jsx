@@ -1,6 +1,7 @@
 import { Audio } from 'expo-av';
 import React, { useState } from 'react';
 import { Alert, Button, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
 
 const SpeakerTest = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,7 +21,7 @@ const SpeakerTest = () => {
       );
 
       setIsPlaying(true);
-      
+
       sound.setOnPlaybackStatusUpdate((status) => {
         if (status.didJustFinish) {
           setIsPlaying(false);
@@ -30,7 +31,7 @@ const SpeakerTest = () => {
       });
 
       await sound.playAsync();
-      
+
     } catch (error) {
       setIsPlaying(false);
       Alert.alert('Error', 'Failed to play sound: ' + (error).message);
@@ -39,15 +40,20 @@ const SpeakerTest = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Speaker Test</Text>
       <TouchableOpacity
-        style={styles.button}
+        style={[
+          styles.button,
+          { backgroundColor: '#006400', borderWidth: 0, borderColor: '#9ACD32' }
+        ]}
         onPress={testSpeaker}
         disabled={isPlaying}
+        activeOpacity={0.7}
       >
-        <Text style={styles.buttonText}>
-          {isPlaying ? "Playing..." : "Play Test Sound"}
-        </Text>
+        <Ionicons
+          name={isPlaying ? "volume-high" : "volume-medium"}
+          size={36}
+          color={isPlaying ? "#9ACD32" : "#9ACD32"}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'blue',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 20,
     marginTop: 20
   },
   buttonText: {
